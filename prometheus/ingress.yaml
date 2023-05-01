@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prometheus-ui
+  namespace: monitoring
+  # annotations:
+  #   cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  rules:
+    # Use the host you used in your kubernetes Ingress Configurations
+    - host: prometheus.youdomain.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: prometheus-service
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
+  # tls:
+  #   - hosts:
+  #       - prometheus.youdomain.com
+  #     secretName: ssl-prometheus.youdomain.com
